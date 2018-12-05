@@ -1,2 +1,2 @@
-# ZminaFondu
-http://zminafondu.kiev.ua/
+# zminafondu
+an initial repo for new site 

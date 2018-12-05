@@ -1,0 +1,6 @@
+Contact: mailto:lawkruzz@gmail.com
+Contact: http://zminafondu.kiev.ua/contact/
+Encryption: https://services.google.com/corporate/publickey.txt
+Acknowledgements:
+Policy:
+Signature:

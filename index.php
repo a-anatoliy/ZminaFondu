@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <?php
-define("ROOT_DIR"   , __DIR__ );
+define('ROOT_DIR'   , __DIR__ );
 require ROOT_DIR . '/bin/starter.php';
 ?>
     <head>

@@ -1,22 +1,16 @@
 <?php
 return array(
     'site' => array(
-        'url'     => '',
+        'url'     => 'http://zminafondu.kiev.ua/',
     	'defLang' => 'ua',
-    ),
-    'stat' => array(
-        'OK_mail'   => '/data/ok_requests.txt',
-        'FAIL_mail' => '/data/bad_requests.txt',
-        'hits'      => '/data/hitcount.txt',
+    	'orgName' => 'ZminaFondu',
     ),
  'form' => array(
-     'bcc' => 'some@some.com',
-     'to'  => 'some@gmail.com',
-	'from' => 'some@some.eu',
+      'to' => 'info@zminafondu.kiev.ua',
+      'cc' => 'Lawkruzz@gmail.com',
+      'bcc' => '',
+     'subject' => 'Лист від користувача сайту'
     ),
 );
 
-/*
-https://github.com/a-anatoliy/zminafondu.git
-git remote add origin git@github.com:a-anatoliy/zminafondu.git
-git push -u --force origin master
+

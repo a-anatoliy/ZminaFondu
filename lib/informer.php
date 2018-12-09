@@ -9,8 +9,9 @@
 
 class Informer {
 
+
     public  $username,$usermail,$usertel,$comment;
-    private $sendto,$hasError;
+    private $sendto,$hasError,$orgName,$subject,$cc_sendto,$bcc_sendto;
     public  $sentStatusCode,$sentMsgStatus,$lang,$internalError,$encyFileName;
 
     // $sentStatusCode = [success|fail]
@@ -18,19 +19,18 @@ class Informer {
     const SENT_OK  = 'success';
     const SENT_BAD = 'mailSendFAIL';
 
-    public function __construct($lang) {
+    public function __construct($lang = 'ua') {
 
-        $cfg = require_once CONFIG;
-        $this->sendto     = $cfg["form"]["to"];
-        $this->Cc_sendto  = $cfg["form"]["cc"];
-        $this->Bcc_sendto = $cfg["form"]["bcc"];
-        $this->sendFrom   = $cfg["form"]["from"];
+        $this->lang = $lang;
 
-        $this->encyOK   = ROOT_DIR . $cfg["stat"]["OK_mail"];
-        $this->encyFAIL = ROOT_DIR . $cfg["stat"]["FAIL_mail"];
+        $cfg = require_once '../data/cfg/config.php';
+        $this->sendto     = $cfg['form']['to'];
+        $this->cc_sendto  = $cfg['form']['cc'];
+        $this->bcc_sendto = $cfg['form']['bcc'] or '';
+        $this->subject    = $cfg['form']['subject'];
+        $this->orgName    = $cfg['site']['orgName'];
 
         unset($cfg);
-        $this->lang = $lang;
 
         if(trim($_POST['name']) == '')   { $this->hasError = true;   } else { $this->username = trim($_POST['name']);  }
         if(trim($_POST['email']) == '')  { $this->hasError = true;   } else { $this->usermail = trim($_POST['email']); }
@@ -41,7 +41,6 @@ class Informer {
             } else {
                 $this->comment = trim($_POST['message']);
             }
-//            $this->comment = nl2br($this->comment);
             $this->comment=preg_replace("/[\n\r]+/s","<br/>",$this->comment);
         }
     }
@@ -49,38 +48,45 @@ class Informer {
     public function informUs() {
         if(!isset($this->hasError)) {
             // creating headers
-            $headers  = "From: "    . $this->composeMAilAddr("Lucky Dress",$this->sendFrom);
-            $headers .= "Reply-To: ". $this->composeMAilAddr($this->username,$this->usermail);
-            if (!empty($this->Cc_sendto)) {
-                $headers .= 'Cc: '  . $this->composeMAilAddr("Lucky DRESS copy",$this->Cc_sendto);
+            $from_reply = $this->composeMAilAddr($this->username,$this->usermail);
+            $headers  = 'From: '    . $from_reply;
+            $headers .= 'Reply-To: '. $from_reply;
+            if (!empty($this->cc_sendto)) {
+                $headers .= 'Cc: '  . $this->composeMAilAddr($this->orgName.' copy',$this->cc_sendto);
             }
 
-            $bcc = (empty($this->Bcc_sendto)) ? "" : $this->Bcc_sendto . ', ';
-            $headers .= 'Bcc: ' . $bcc . $this->composeMAilAddr("WebMaster","a3three@gmail.com");
+            $bcc = (empty($this->bcc_sendto)) ? '' : $this->bcc_sendto . ', ';
+            $headers .= 'Bcc: ' . $bcc . $this->composeMAilAddr('WebMaster','a3three@gmail.com');
             $headers .= "MIME-Version: 1.0\r\n";
             $headers .= "Content-Type: text/html;charset=utf-8 \r\n";
 
             // creating the message body
             $msg  = "<html><body style='font-family:Arial,sans-serif;'>";
-            $msg .= "<h2 style='font-weight:bold;border-bottom:1px dotted #ccc;'>Cообщение с сайта</h2>";
-            $msg .= "<p><strong>From:</strong> "        .$this->username ."</p>";
-            $msg .= "<p><strong>E-mail:</strong> "      .$this->usermail ."</p>";
-            $msg .= "<p><strong>Phone number:</strong> ".$this->usertel  ."</p><hr>";
+            $msg .= "<h2 style='font-weight:bold;border-bottom:1px dotted #ccc;'>"
+                        .$this->subject. ' - '. $this->orgName .'</h2>';
+            $msg .= '<p><strong>From:</strong> '        .$this->username .'</p>';
+            $msg .= '<p><strong>E-mail:</strong> '      .$this->usermail .'</p>';
+            $msg .= '<p><strong>Phone number:</strong> '.$this->usertel  .'</p><hr>';
             $msg .= $this->comment;
-            $msg .= "<hr></body></html>";
+            $msg .= '<hr></body></html>';
 
             // sending the message
-            $success = mail($this->sendto, $this->lang["subject"], $msg, $headers);
+            $success = mail($this->sendto, $this->subject, $msg, $headers);
 
             if ($success && $this->hasError != true ) {
-                $this->setSentMsgStatus($this::SENT_OK);
+//                $this->setSentMsgStatus($this::SENT_OK);
+
+                $this->sentMsgStatus ='success';
+                $this->internalError = '';
             } else {
-                $this->setSentMsgStatus($this::SENT_BAD);
+//                $this->setSentMsgStatus($this::SENT_BAD);
                 $success = error_get_last()['message'];
                 $this->internalError = strip_tags($success);
+                $this->sentMsgStatus ='fail';
             }
 
-        } else { $this->setSentMsgStatus($this::SENT_BAD); }
+        }
+        // else { $this->setSentMsgStatus($this::SENT_BAD); }
 
         return $this;
     }

@@ -45,9 +45,9 @@ $(function() {
             },
             success: function(msg) {
                 $('#form-div').html(msg).show('slow');
-                setTimeout( function() {
-                        window.location.href = "/";
-                    }, 5000);
+                // setTimeout( function() {
+                //         window.location.href = "/";
+                //     }, 5000);
 
             },
              error: function() {

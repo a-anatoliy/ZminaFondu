@@ -9,7 +9,6 @@
 
 class Informer {
 
-
     public  $username,$usermail,$usertel,$comment;
     private $sendto,$hasError,$orgName,$subject,$cc_sendto,$bcc_sendto;
     public  $sentStatusCode,$sentMsgStatus,$lang,$internalError,$encyFileName;
@@ -23,7 +22,11 @@ class Informer {
 
         $this->lang = $lang;
 
-        $cfg = require_once '../data/cfg/config.php';
+        $cfg = array_merge(
+            require_once '../data/cfg/config.php'     // get main configuration
+//          ,  require_once '../data/cfg/rnd_string.php'  // get the database configuration
+        );
+
         $this->sendto     = $cfg['form']['to'];
         $this->cc_sendto  = $cfg['form']['cc'];
         $this->bcc_sendto = $cfg['form']['bcc'] or '';
@@ -71,13 +74,16 @@ class Informer {
             $msg .= '<hr></body></html>';
 
             // sending the message
-            $success = mail($this->sendto, $this->subject, $msg, $headers);
+//            $success = mail($this->sendto, $this->subject, $msg, $headers);
+            $success = 1;
 
             if ($success && $this->hasError != true ) {
 //                $this->setSentMsgStatus($this::SENT_OK);
 
                 $this->sentMsgStatus ='success';
                 $this->internalError = '';
+
+                $this->addToDB();
             } else {
 //                $this->setSentMsgStatus($this::SENT_BAD);
                 $success = error_get_last()['message'];
@@ -95,11 +101,16 @@ class Informer {
         return sprintf("%s <%s>\r\n",strip_tags($Name),strip_tags($address));
     }
 
-    private function setSentMsgStatus($code) {
-        $this->sentStatusCode = $code;
-        $this->sentMsgStatus  = $this->lang[ $this->sentStatusCode ];
-        if ($code === $this::SENT_OK) { $this->encyFileName = $this->encyOK; }
-        elseif ($code === $this::SENT_BAD) { $this->encyFileName = $this->encyFAIL; }
-        else { $this->encyFileName = $this->encyOK; }
+    private function addToDB() {
+        require_once '../core/data_class.php';
+        require_once '../core/querymap_class.php';
+        // establish the db connection
+        $cfg = require_once '../data/cfg/rnd_string.php';  // get the database configuration
+        $d = new Data($cfg);
+        $res = $d->add(QueryMap::INSERT_ORDER,array(
+            $this->username,$this->usermail,$this->usertel,$this->comment
+        ));
+//        var_dump($res);
     }
+
 }

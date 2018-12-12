@@ -85,7 +85,7 @@ class Visitor {
     public function countIt() {
         if ($this->insert) {
             try {
-                var_dump($this);
+//                var_dump($this);
                 $this->addToDB();
             } catch (\ErrorException $e) {
                 echo $e->getMessage();

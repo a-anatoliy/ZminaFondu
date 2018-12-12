@@ -5,7 +5,7 @@
  * Date: 05.12.2018
  * Time: 9:32
  */
-session_start();
+
 
 mb_internal_encoding("UTF-8");
 // date_default_timezone_set('CET');
@@ -32,6 +32,7 @@ define('DB_CONFIG'  , ROOT_DIR . '/data/cfg/rnd_string.php');
 
 //include ROOT_DIR      .'/lib/SxGeo.php';
 //require_once ROOT_DIR . '/lib/Utils.php';
+//session_start();
 
 if ( !isset( $_SESSION["origURL"] ) ) {
 

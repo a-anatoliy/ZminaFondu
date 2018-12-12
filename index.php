@@ -1,13 +1,13 @@
-<!doctype html>
-<html lang="en">
 <?php
 define('ROOT_DIR'   , __DIR__ );
 require ROOT_DIR . '/bin/starter.php';
 require ROOT_DIR . '/core/visitor_class.php';
 $user = new Visitor();
 $user->countIt();
-echo '<pre>';var_dump($user);echo '</pre>';
+//echo '<pre>';var_dump($user);echo '</pre>';
 ?>
+<!doctype html>
+<html lang="en">
     <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">

@@ -17,7 +17,9 @@ class QueryMap {
     const SELECT_FAMOUS       = "SELECT * FROM ".QueryMap::DB_PREFIX."famous WHERE lang_id=? ORDER BY RAND() LIMIT ?;";
     const SELECT_FAMOUS_BY_ID = "SELECT * FROM ".QueryMap::DB_PREFIX."famous WHERE id=?";
 
-    const INSERT_ORDER = "INSERT INTO ".QueryMap::DB_PREFIX."orders (`id`,`name`,`email`,`phone`,`message`,`add_date`) values (NULL,?,?,?,?,UNIX_TIMESTAMP());";
+    const INSERT_ORDER   = "INSERT INTO ".QueryMap::DB_PREFIX."orders (`id`,`name`,`email`,`phone`,`message`,`add_date`) values (NULL,?,?,?,?,UNIX_TIMESTAMP());";
+    const INSERT_VISITOR = "INSERT INTO ".QueryMap::DB_PREFIX."stats (`id`,`ip`,`uri`,`agent`,`ref`,`query`,`user`,`geoloc`,`add_date`) values (NULL,?,?,?,?,?,?,?,UNIX_TIMESTAMP());";
+
 
 
 }

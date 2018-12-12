@@ -9,22 +9,20 @@
 
 class Informer {
 
-    public  $username,$usermail,$usertel,$comment;
-    private $sendto,$hasError,$orgName,$subject,$cc_sendto,$bcc_sendto;
-    public  $sentStatusCode,$sentMsgStatus,$lang,$internalError,$encyFileName;
+    public  $username, $usermail, $usertel, $comment;
+    public  $sentStatusCode, $sentMsgStatus, $lang, $internalError;
+    private $sendto, $hasError, $orgName, $subject, $cc_sendto, $bcc_sendto;
 
-    // $sentStatusCode = [success|fail]
-    // $sentMsgStatus accordingly taken from the lang([success|fail])
-    const SENT_OK  = 'success';
-    const SENT_BAD = 'mailSendFAIL';
 
+    /**
+     * Informer constructor.
+     * @param string $lang non mandatory parameter
+     */
     public function __construct($lang = 'ua') {
 
         $this->lang = $lang;
-
         $cfg = array_merge(
             require_once '../data/cfg/config.php'     // get main configuration
-//          ,  require_once '../data/cfg/rnd_string.php'  // get the database configuration
         );
 
         $this->sendto     = $cfg['form']['to'];
@@ -48,6 +46,9 @@ class Informer {
         }
     }
 
+    /**
+     * @return $this
+     */
     public function informUs() {
         if(!isset($this->hasError)) {
             // creating headers
@@ -74,33 +75,34 @@ class Informer {
             $msg .= '<hr></body></html>';
 
             // sending the message
-//            $success = mail($this->sendto, $this->subject, $msg, $headers);
-            $success = 1;
+            $success = mail($this->sendto, $this->subject, $msg, $headers);
 
             if ($success && $this->hasError != true ) {
-//                $this->setSentMsgStatus($this::SENT_OK);
-
                 $this->sentMsgStatus ='success';
                 $this->internalError = '';
-
-                $this->addToDB();
             } else {
-//                $this->setSentMsgStatus($this::SENT_BAD);
                 $success = error_get_last()['message'];
                 $this->internalError = strip_tags($success);
                 $this->sentMsgStatus ='fail';
             }
-
+            $this->addToDB();
         }
-        // else { $this->setSentMsgStatus($this::SENT_BAD); }
 
         return $this;
     }
 
+    /**
+     * @param $Name
+     * @param $address
+     * @return string
+     */
     private function composeMAilAddr($Name, $address) {
         return sprintf("%s <%s>\r\n",strip_tags($Name),strip_tags($address));
     }
 
+    /**
+     *
+     */
     private function addToDB() {
         require_once '../core/data_class.php';
         require_once '../core/querymap_class.php';

@@ -3,6 +3,10 @@
 <?php
 define('ROOT_DIR'   , __DIR__ );
 require ROOT_DIR . '/bin/starter.php';
+require ROOT_DIR . '/core/visitor_class.php';
+$user = new Visitor();
+$user->countIt();
+echo '<pre>';var_dump($user);echo '</pre>';
 ?>
     <head>
     <!-- Required meta tags -->

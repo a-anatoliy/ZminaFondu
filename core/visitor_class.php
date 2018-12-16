@@ -66,7 +66,7 @@ class Visitor {
                     $details->country,$details->region,$details->city,$details->org);
                 $this->country_code = strtolower($details->country);
             }
-        }
+        } else { $this->geoloc = 'local'; }
 
         // check if we have new unique visitor
         if ( !$this->unique_visits || !isset($_COOKIE[$this::VISITED_COOKIE_NAME]) ) {
@@ -115,10 +115,15 @@ class Visitor {
         require_once 'data_class.php';
         require_once 'querymap_class.php';
         // establish the db connection
-        $cfg = require_once '../data/cfg/rnd_string.php';  // get the database configuration
-//        $d = new Data($cfg);
-//        $res = $d->add(QueryMap::INSERT_VISITOR,$this->dbFields);
-//        var_dump($res);
+        $cfg = require_once
+            $_SERVER['DOCUMENT_ROOT'].'/data/cfg/rnd_string.php';  // get the database configuration
+        $d = new Data($cfg);
+        $params = array();
+        foreach ($this->dbFields as $dbField) {
+            array_push($params,$this->$dbField);
+        }
+        $res = $d->add(QueryMap::INSERT_VISITOR,$params);
+        return $res;
     }
 
     private function setSessVal ($k,$v) { $_SESSION[$k] = $v; }

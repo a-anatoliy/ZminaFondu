@@ -32,11 +32,11 @@ define('DB_CONFIG'  , ROOT_DIR . '/data/cfg/rnd_string.php');
 
 //include ROOT_DIR      .'/lib/SxGeo.php';
 //require_once ROOT_DIR . '/lib/Utils.php';
-//session_start();
 
-if ( !isset( $_SESSION["origURL"] ) ) {
 
-    $_SESSION["origURL"] =
+if ( !isset( $_SESSION['origURL'] ) ) {
+
+    $_SESSION['origURL'] =
         isset($_SERVER['HTTP_REFERER'])
             ? urldecode($_SERVER['HTTP_REFERER'])
             : 'empty_REFER';

@@ -10,8 +10,24 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema zminafon_db
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `zminafon_db` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin ;
+-- CREATE SCHEMA IF NOT EXISTS `zminafon_db` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin ;
 USE `zminafon_db` ;
+
+-- -----------------------------------------------------
+-- Table `zminafon_db`.`zf_langs`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `zminafon_db`.`zf_langs` ;
+
+CREATE TABLE IF NOT EXISTS `zminafon_db`.`zf_langs` (
+  `id` TINYINT(1) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(6) NOT NULL,
+  `title` VARCHAR(12) NOT NULL,
+  `active` ENUM('1', '0') NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`))
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8
+  COLLATE = utf8_bin
+  COMMENT = 'available languages';
 
 -- -----------------------------------------------------
 -- Table `zminafon_db`.`zf_auxiliary_phrases`
@@ -65,24 +81,6 @@ DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_bin
 COMMENT = 'fields used in the contact form';
 
-
--- -----------------------------------------------------
--- Table `zminafon_db`.`zf_langs`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `zminafon_db`.`zf_langs` ;
-
-CREATE TABLE IF NOT EXISTS `zminafon_db`.`zf_langs` (
-  `id` TINYINT(1) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(6) NOT NULL,
-  `title` VARCHAR(12) NOT NULL,
-  `active` ENUM('1', '0') NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_bin
-COMMENT = 'available languages';
-
-
 -- -----------------------------------------------------
 -- Table `zminafon_db`.`zf_orders`
 -- -----------------------------------------------------
@@ -100,7 +98,6 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_bin
 COMMENT = 'all of orders were posted using the form on web-site';
-
 
 -- -----------------------------------------------------
 -- Table `zminafon_db`.`zf_stats`

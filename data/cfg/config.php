@@ -4,8 +4,12 @@ return array(
         'url'     => 'http://zminafondu.kiev.ua/',
     	'defLang' => 'ua',
     	'orgName' => 'ZminaFondu',
+        'theme'   => 'default',
     ),
- 'form' => array(
+    'stat' => array(
+        'rowsPerPage' => 50
+    ),
+    'form' => array(
       'to' => 'info@zminafondu.kiev.ua',
       'cc' => 'Lawkruzz@gmail.com',
       'bcc' => '',

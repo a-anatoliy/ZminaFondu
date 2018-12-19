@@ -76,8 +76,6 @@ class Data {
      * Add record to the DB, returns ID if success ant 0 otherwise
      */
     public function add($query, $param = array()) {
-//        self::$sth = self::getDbh()->prepare($query);
-//        return (self::$sth->execute((array) $param)) ? self::getDbh()->lastInsertId() : 0;
         $this->sth = $this->dbc->prepare($query);
         return ($this->sth->execute((array) $param)) ? $this->dbc->lastInsertId() : 0;
     }
@@ -102,10 +100,10 @@ class Data {
     /**
      * select all rows from table
      */
-    public static function getAll($query, $param = array()) {
-        self::$sth = self::getDbh()->prepare($query);
-        self::$sth->execute((array) $param);
-        return self::$sth->fetchAll(PDO::FETCH_ASSOC);
+    public function getAll($query, $param = array()) {
+        $this->sth = $this->dbc->prepare($query);
+        $this->sth->execute((array) $param);
+        return $this->sth->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**

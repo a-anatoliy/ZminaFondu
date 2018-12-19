@@ -25,8 +25,16 @@ $user->countIt();
     <meta property="og:title" content="Переведення квартири до нежитлового фонду. Київ. 2018"/>
     <meta property="og:description" content="Зміна фонду з житлового на нежитловий. Київ. Перевести квартиру під магазин. Переобладнати квартиру під офіс зі зміною фонду. Квартиру на першому поверсі здати в оренду банку. Квартиру під офіс банку."/>
     <meta property="og:url" content="https://zminafondu.kiev.ua"/>
-    <meta property="og:type" content="article"/>
+    <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="Переведення квартири до нежитлового фонду. Київ. 2018"/>
+    <meta property="og:image" content="http://zminafondu.kiev.ua/i/002s.jpg"/>
+    <meta property="og:image:secure_url" content="http://zminafondu.kiev.ua/i/002s.jpg"/>
+    <meta property="og:image:type" content="image/jpeg"/>
+    <meta property="og:image:width" content="252"/>
+    <meta property="og:image:height" content="190"/>
+    <meta itemprop="name" content="Переведення квартири до нежитлового фонду. Київ."/>
+    <meta itemprop="description" content="Переведення квартири до нежитлового фонду. Київ."/>
+    <meta itemprop="image" content="http://zminafondu.kiev.ua/i/002s.jpg"/>
 
     <link href="https://fonts.googleapis.com/css?family=Jura" rel="stylesheet">
     <!-- Bootstrap CSS -->
@@ -197,11 +205,8 @@ $user->countIt();
         </div>
     </footer>
 
-    <a id="back-to-top"
-       href="#"
-       class="btn btn-outline-secondary btn-sm back-to-top"
-       role="button" title="TOP"
-       data-toggle="tooltip" data-placement="left">
+    <a id="back-to-top" href="#" class="btn btn-outline-secondary btn-sm back-to-top"
+       role="button" title="TOP" data-toggle="tooltip" data-placement="left">
         <span class="fa fa-chevron-up"></span>
     </a>
 

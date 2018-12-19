@@ -85,7 +85,6 @@ class Visitor {
     public function countIt() {
         if ($this->insert) {
             try {
-//                var_dump($this);
                 $this->addToDB();
             } catch (\ErrorException $e) {
                 echo $e->getMessage();
@@ -118,11 +117,13 @@ class Visitor {
         $cfg = require_once
             $_SERVER['DOCUMENT_ROOT'].'/data/cfg/rnd_string.php';  // get the database configuration
         $d = new Data($cfg);
+        $qMap = new QueryMap();
         $params = array();
         foreach ($this->dbFields as $dbField) {
             array_push($params,$this->$dbField);
         }
-        $res = $d->add(QueryMap::INSERT_VISITOR,$params);
+
+        $res = $d->add($qMap->getQuery('INSERT_VISITOR'),$params);
         return $res;
     }
 

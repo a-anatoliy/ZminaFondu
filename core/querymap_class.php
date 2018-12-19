@@ -9,18 +9,39 @@
 class QueryMap {
 
     const DB_PREFIX = 'zf_';
+    private $tableFields,$q;
 
-    const SELECT_AUX_PHRASES  = "SELECT subst_name,phrase FROM ".QueryMap::DB_PREFIX."auxiliary_phrases WHERE page_name=? AND lang_id=?;";
-    const SELECT_LANGUAGES    = "SELECT id,title FROM ".QueryMap::DB_PREFIX."langs WHERE active=1;";
-    const SELECT_PAGE_DATA    = "SELECT * FROM ".QueryMap::DB_PREFIX."pages WHERE page_name=? AND lang_id=? AND active=1;";
-    const SELECT_PAGES        = "SELECT id,page_name,announcement FROM ".QueryMap::DB_PREFIX."pages WHERE sort_id > 0 AND lang_id=? AND active=1 ORDER BY sort_id;";
-    const SELECT_FAMOUS       = "SELECT * FROM ".QueryMap::DB_PREFIX."famous WHERE lang_id=? ORDER BY RAND() LIMIT ?;";
-    const SELECT_FAMOUS_BY_ID = "SELECT * FROM ".QueryMap::DB_PREFIX."famous WHERE id=?";
+    public function __construct() {
 
-    const INSERT_ORDER   = "INSERT INTO ".QueryMap::DB_PREFIX."orders (`id`,`name`,`email`,`phone`,`message`,`add_date`) values (NULL,?,?,?,?,UNIX_TIMESTAMP());";
-    const INSERT_VISITOR = "INSERT INTO ".QueryMap::DB_PREFIX."stats (`id`,`ip`,`uri`,`agent`,`ref`,`query`,`user`,`geoloc`,`add_date`) values (NULL,?,?,?,?,?,?,?,UNIX_TIMESTAMP());";
+        $this->tableFields = array(
+            'orders' => ['id','name','email','phone','message','add_date'],
+            'visits' => ['id','ip','uri','agent','ref','query','user','geoloc','add_date'],
+        );
 
+    $this->q = array(
+    'SELECT_ALL_ORDERS'  => 'SELECT '.$this->getTableFields('orders').' FROM '.QueryMap::DB_PREFIX.'orders ORDER BY add_date DESC;',
+    'SELECT_ALL_VISITOR' => 'SELECT '.$this->getTableFields('visits') .' FROM '.QueryMap::DB_PREFIX.'stats ORDER BY add_date DESC LIMIT ?,?;',
+    'INSERT_ORDER'       => 'INSERT INTO '.QueryMap::DB_PREFIX.'orders ('.$this->getTableFields('orders').') values (NULL,?,?,?,?,UNIX_TIMESTAMP());',
+    'INSERT_VISITOR'     => 'INSERT INTO '.QueryMap::DB_PREFIX.'stats (' .$this->getTableFields('visits') .') values (NULL,?,?,?,?,?,?,?,UNIX_TIMESTAMP());'
+    );
 
+    }
+
+    /**
+     * @param $qName
+     * @return mixed
+     */
+    public function getQuery($qName) {
+        if(array_key_exists($qName,$this->q))
+             { return $this->q[$qName]; }
+        else { die ("Unknown query name: $qName"); }
+    }
+
+    public function getTableFields($tblName) {
+        if (array_key_exists($tblName,$this->tableFields))
+             { return implode(',', $this->tableFields[$tblName]); }
+        else { die ("Unknown table name: - $tblName"); }
+    }
 
 }
 

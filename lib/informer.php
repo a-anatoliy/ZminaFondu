@@ -109,10 +109,10 @@ class Informer {
         // establish the db connection
         $cfg = require_once '../data/cfg/rnd_string.php';  // get the database configuration
         $d = new Data($cfg);
-        $res = $d->add(QueryMap::INSERT_ORDER,array(
+        $qMap = new QueryMap();
+        $d->add($qMap->getQuery('INSERT_ORDER'),array(
             $this->username,$this->usermail,$this->usertel,$this->comment
         ));
-//        var_dump($res);
     }
 
 }

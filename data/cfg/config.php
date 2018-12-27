@@ -7,7 +7,8 @@ return array(
         'theme'   => 'default',
     ),
     'stat' => array(
-        'rowsPerPage' => 50
+        'rowsPerPage' => 5,
+        'urlPattern'  => '/bin/mr450.php?s56=(:num)'
     ),
     'form' => array(
       'to' => 'info@zminafondu.kiev.ua',

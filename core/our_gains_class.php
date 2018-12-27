@@ -23,8 +23,8 @@ class Our_gains {
      * @param $cfg
      */
     public function __construct($cfg) {
-        require_once ROOT_DIR.'/core/data_class.php';
-        require_once ROOT_DIR.'/core/querymap_class.php';
+        require_once ROOT_DIR . '/core/data_class.php';
+        require_once ROOT_DIR . '/core/querymap_class.php';
 
         $this->dbh  = new Data($cfg);
         $this->qMap = new QueryMap();
@@ -38,18 +38,21 @@ class Our_gains {
     public function getData($collectionName = 'orders', $params = array()) {
         $localMap = [
             'orders' => 'SELECT_ALL_ORDERS',
-            'visits' => 'SELECT_ALL_VISITOR'
+            'visits' => 'SELECT_VISITOR_LIMIT'
         ];
 
         $this->setQuery($localMap[$collectionName]);
+
         // get all of an appropriate records from the database
         // default is 'orders'
         $allData = $this->dbh->getAll(
             $this->getQuery(),
             $params
         );
+
         // set this array of data
         $this->setRows($allData);
+
         // how many rows do we have
         $this->setRowsCount(sizeof($allData));
 

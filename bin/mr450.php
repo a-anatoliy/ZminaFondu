@@ -17,20 +17,57 @@ $cfg = array_merge(
 );
 
 define('DIR_TMPL' , ROOT_DIR . '/themes/'.$cfg['site']['theme'].'/tmpl/' );
+
+require ROOT_DIR . '/core/argh_class.php';
+// ---------------------------------------------------------
+$auth = new Argh();
+
+if (isset($_POST['lgn']) && isset($_POST['psw'])) { //Если логин и пароль были отправлены
+    if (!$auth->auth($_POST['lgn'], $_POST['psw'])) { //Если логин и пароль введен не правильно
+        echo "<h4 style=\"color:red;\">Incorrect value of either login or password</h4>";
+        include DIR_TMPL . 'statLoginForm.html';
+        exit;
+    }
+}
+
+if (isset($_GET["is_exit"])) { //Если нажата кнопка выхода
+    if ($_GET["is_exit"] == 1) {
+        $auth->out(); //Выходим
+        header("Location: ?is_exit=0"); //Редирект после выхода
+    }
+}
+
+if (!$auth->isAuth()) {
+    include DIR_TMPL . 'statLoginForm.html';
+    exit;
+}
+
+// ---------------------------------------------------------
+//Get the page number
+$startP = filter_input(INPUT_GET,'s56',FILTER_SANITIZE_NUMBER_INT);
+if(!isset($startP)) { $startP = 1; }
+
+
+
 $mainWebAddr = $cfg['site']['url'];
-$pagerStart = 0;
 
 require_once ROOT_DIR . '/lib/ourGains.php';
+require_once ROOT_DIR . '/lib/Paginator.php';
 
-$gains = new ourGains($cfg);
-$orders   = $gains->buildOrdersTable();
-$visitors = $gains->buildVisitorTable($pagerStart,$cfg['stat']['rowsPerPage']);
+$gains  = new ourGains($cfg);
 
-//echo '<pre>';var_dump($orders);echo '</pre>';
+// get all of orders
+$orders = $gains->buildOrdersTable();
 
-$totalemails = 12345;
-$newItems = 1239;
-$pagination = 'pagination';
+//Total data to display per page
+$per_page = $cfg['stat']['rowsPerPage'];
+
+// get all of the visitors
+$start = ($startP - 1) * $per_page;
+$visitors = $gains->buildVisitorTable($start,$per_page);
+
+$paginator = new Paginator($cfg,$startP);
+//echo '<pre>'; var_dump($paginator->getPages()); echo '</pre>';
 ?>
 <!doctype html>
 <html lang="ru">
@@ -47,31 +84,10 @@ $pagination = 'pagination';
     <link href="/css/fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="/css/counter.css">
 
     <title>статистика посещений</title>
-    <style>
-        /*
-        .navbar-inverse {
-            background-color: #F8F8F8;
-            border-color: #E7E7E7;
-        }
-        */
 
-        /*.navbar { min-height: 40px !important; }*/
-        .navbar-brand {
-            padding: 4px 145px;
-            height: 40px !important;
-            line-height: 40px !important;
-            color: #000 !important;
-            text-shadow: 0 1px 0 rgba(255,255,255,.1), 0 0 30px rgba(255,255,255,.125) !important;
-        }
-
-        .drop-shadow {
-            -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .5);
-            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .5);
-        }
-    </style>
 </head>
 <body>
 
@@ -86,22 +102,23 @@ $pagination = 'pagination';
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
                 <a class="nav-link" href="#">Статистика
-                    <span class="badge badge-secondary"> <?=$totalemails?> </span>
+                    <span class="badge badge-secondary"> <?=$paginator->getTotalItems()?> </span>
                 </a>
             </li>
             <li class="nav-item"> <?=$gains->ordersCount?> </li>
             <li class="nav-item"> <a class="nav-link" href="<?=$mainWebAddr?>" target="_blank">Сайт</a> </li>
-
         </ul>
     </div>
+    <a class="btn btn-outline-light btn-sm" href='?is_exit=1'>logout</a>
 </nav>
-<!- ############################################### -->
+
+<!-- ############################################### -->
 <?=$gains->ordersTable?>
-<!- ############################################### -->
+<!-- ############################################### -->
 <div class="container-fluid">
-
-    <?=$pagination?>
-
+    <?php
+        include DIR_TMPL . 'statPagination.html';
+    ?>
     <div class="row">
         <div class="col-12">
             <table class="table table-hover table-bordered table-sm mt-2 table-striped">
@@ -114,9 +131,9 @@ $pagination = 'pagination';
             </table>
         </div>
     </div>
-<!- ############################################### -->
-    <?=$pagination?>
-<!- ############################################### -->
+    <?php
+        include DIR_TMPL . 'statPagination.html';
+    ?>
 </div>
 <!-- Footer -->
 <footer class="bg-black small text-center text-white-50">

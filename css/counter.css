@@ -1,0 +1,31 @@
+/*
+.navbar-inverse {
+    background-color: #F8F8F8;
+    border-color: #E7E7E7;
+}
+
+body { background-color: #6c757d }
+*/
+
+/*.navbar { min-height: 40px !important; }*/
+.navbar-brand {
+    padding: 4px 145px;
+    height: 40px !important;
+    line-height: 40px !important;
+    color: #000 !important;
+    text-shadow: 0 1px 0 rgba(255,255,255,.1), 0 0 30px rgba(255,255,255,.125) !important;
+}
+
+.txtShadow {
+    text-shadow: 0 1px 0 rgba(255,255,255,.1), 0 0 30px rgba(255,255,255,.125) !important;
+}
+
+.drop-shadow {
+    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .5);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .5);
+}
+.page-item.active .page-link {
+    z-index: 1;
+    color: #000;
+    background-color: #ccc;
+}

@@ -91,10 +91,10 @@ class Data {
     /**
      * get row from the db
      */
-    public static function getRow($query, $param = array()) {
-        self::$sth = self::getDbh()->prepare($query);
-        self::$sth->execute((array) $param);
-        return self::$sth->fetch(PDO::FETCH_ASSOC);
+    public function getRow($query, $param = array()) {
+        $this->sth = $this->dbc->prepare($query);
+        $this->sth->execute((array) $param);
+        return $this->sth->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -109,8 +109,8 @@ class Data {
     /**
      * get value
      */
-    public static function getValue($query, $param = array(), $default = null) {
-        $result = self::getRow($query, $param);
+    public function getValue($query, $param = array(), $default = null) {
+        $result = $this->getRow($query, $param);
         if (!empty($result)) {
             $result = array_shift($result);
         }

@@ -10,7 +10,7 @@ require_once ROOT_DIR.'/core/our_gains_class.php';
 
 class ourGains extends Our_gains {
 
-    public $ordersCount,$ordersTable,$statRows;
+    public $ordersCount,$ordersTable,$statRows,$visitorsCount;
     private $orderTemplate;
 
     public function buildOrdersTable() {
@@ -45,9 +45,9 @@ class ourGains extends Our_gains {
 
     public function buildVisitorTable($start,$rowsPerPage) {
         $this->getData('visits', [$start,$rowsPerPage]);
-        $cnt = $this->getRowsCount();
+        $this->visitorsCount = $this->getRowsCount();
         // we have some data collected fro the database
-        if ($cnt > 0 ) {
+        if ($this->visitorsCount > 0 ) {
             $Visitors = $this->getRows();
             foreach ($Visitors as $visitor) {
                 $this->statRows .= sprintf("<tr>%s</tr>",$this->setTableRow($visitor));
@@ -77,10 +77,32 @@ class ourGains extends Our_gains {
                     .date( "D, j M Y. H:i:s" , $inputRow[$field])
                     .'</td>';
             } else {
+
+                if (mb_strlen($inputRow[$field], 'utf8') > 180) {
+                    $inputRow[$field] = $this->cutString($inputRow[$field],100);
+                    $inputRow[$field] = '<small>'.$inputRow[$field].'</small>';
+                }
                 $outString .= '<td>'.$inputRow[$field].'</td>';
             }
         }
         return $outString;
+    }
+
+    /**
+     * @param $string
+     * @param int $chars
+     * @return string
+     */
+    public function cutString($string, $chars=80) {
+        // remove all of html tags
+        $string = strip_tags($string);
+        // remove unnecessary symbols
+        $string = mb_substr($string, 0, $chars);
+        // remove special chars from the end of string
+        $string = rtrim($string, "!,.-");
+        // remove space symbol from the end of line
+//        $string = mb_substr($string, 0, strrpos($string, ' '));
+        return $string.' ...';
     }
 }
 

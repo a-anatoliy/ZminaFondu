@@ -19,10 +19,11 @@ class QueryMap {
         );
 
     $this->q = array(
-    'SELECT_ALL_ORDERS'  => 'SELECT '.$this->getTableFields('orders').' FROM '.QueryMap::DB_PREFIX.'orders ORDER BY add_date DESC;',
-    'SELECT_ALL_VISITOR' => 'SELECT '.$this->getTableFields('visits') .' FROM '.QueryMap::DB_PREFIX.'stats ORDER BY add_date DESC LIMIT ?,?;',
-    'INSERT_ORDER'       => 'INSERT INTO '.QueryMap::DB_PREFIX.'orders ('.$this->getTableFields('orders').') values (NULL,?,?,?,?,UNIX_TIMESTAMP());',
-    'INSERT_VISITOR'     => 'INSERT INTO '.QueryMap::DB_PREFIX.'stats (' .$this->getTableFields('visits') .') values (NULL,?,?,?,?,?,?,?,UNIX_TIMESTAMP());'
+    'SELECT_ALL_ORDERS'    => 'SELECT '.$this->getTableFields('orders').' FROM '.QueryMap::DB_PREFIX.'orders ORDER BY add_date DESC;',
+    'SELECT_VISITOR_CNT'   => 'SELECT count(id) as total FROM '.QueryMap::DB_PREFIX.'stats',
+    'SELECT_VISITOR_LIMIT' => 'SELECT '.$this->getTableFields('visits') .' FROM '.QueryMap::DB_PREFIX.'stats ORDER BY add_date DESC LIMIT ?,?;',
+    'INSERT_ORDER'         => 'INSERT INTO '.QueryMap::DB_PREFIX.'orders ('.$this->getTableFields('orders').') values (NULL,?,?,?,?,UNIX_TIMESTAMP());',
+    'INSERT_VISITOR'       => 'INSERT INTO '.QueryMap::DB_PREFIX.'stats (' .$this->getTableFields('visits') .') values (NULL,?,?,?,?,?,?,?,UNIX_TIMESTAMP());'
     );
 
     }

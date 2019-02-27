@@ -110,21 +110,36 @@ class Visitor {
         return $ip;
     }
 
-    private function addToDB() {
-        require_once 'data_class.php';
-        require_once 'querymap_class.php';
-        // establish the db connection
-        $cfg = require_once
-            $_SERVER['DOCUMENT_ROOT'].'/data/cfg/rnd_string.php';  // get the database configuration
-        $d = new Data($cfg);
-        $qMap = new QueryMap();
-        $params = array();
-        foreach ($this->dbFields as $dbField) {
-            array_push($params,$this->$dbField);
+    private function isBot() {
+        $knownBots = require $_SERVER['DOCUMENT_ROOT'].'/bin/botList.php';
+        foreach ($knownBots as $botName) {
+            if (preg_match("/$botName/i",$this->agent)) {
+                return true;
+            }
         }
+        return false;
+    }
 
-        $res = $d->add($qMap->getQuery('INSERT_VISITOR'),$params);
-        return $res;
+    private function addToDB() {
+        if($this->isBot()) {
+            // it's a bot. no need to add this into stats
+            return 1;
+        } else {
+            require_once 'data_class.php';
+            require_once 'querymap_class.php';
+            // establish the db connection
+            $cfg = require_once
+                $_SERVER['DOCUMENT_ROOT'].'/data/cfg/rnd_string.php';  // get the database configuration
+            $d = new Data($cfg);
+            $qMap = new QueryMap();
+            $params = array();
+            foreach ($this->dbFields as $dbField) {
+                array_push($params,$this->$dbField);
+            }
+
+            $res = $d->add($qMap->getQuery('INSERT_VISITOR'),$params);
+            return $res;
+        }
     }
 
     private function setSessVal ($k,$v) { $_SESSION[$k] = $v; }

@@ -25,7 +25,7 @@ class ourGains extends Our_gains {
         $this->getData('orders');
         $cnt = $this->getRowsCount();
 
-        // we have some data collected fro the database
+        // we have some data collected for the database
         if ($cnt > 0 ) {
             $ordersTableRows = '';
             $Orders = $this->getRows();

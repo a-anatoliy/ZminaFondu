@@ -1,3 +1,2 @@
-Base paginator: https://github.com/jasongrimes/php-paginator
 Валидация и очистка данных средствами PHP:
 http://www.codeharmony.ru/materials/17

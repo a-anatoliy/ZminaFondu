@@ -105,7 +105,7 @@ COMMENT = 'all of orders were posted using the form on web-site';
 DROP TABLE IF EXISTS `zminafon_db`.`zf_stats` ;
 
 CREATE TABLE IF NOT EXISTS `zminafon_db`.`zf_stats` (
-  `id` TINYINT(1) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` BIGINT(1) UNSIGNED NOT NULL AUTO_INCREMENT,
   `ip` VARCHAR(100) NOT NULL,
   `uri` VARCHAR(255) NULL DEFAULT NULL,
   `agent` VARCHAR(500) NULL DEFAULT NULL,

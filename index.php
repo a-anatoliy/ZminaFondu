@@ -45,6 +45,32 @@ $user->countIt();
     <link rel="stylesheet" href="/css/animate.css">
 
     <title>Зміна житлового фонду на нежитловий (місто Київ)</title>
+
+    <!-- Facebook Pixel Code -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '975700909487438');
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=975700909487438&ev=PageView&noscript=1" /></noscript>
+    <!-- End Facebook Pixel Code -->
+
+    <!-- Load Facebook SDK for JavaScript -->
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
     </head>
 
   <body>
@@ -89,7 +115,7 @@ $user->countIt();
           <div class="col-9 main-fnt main-fnt-size">
               <ul class="animated bounceInRight">
                   <li><b>Срок виконання - 1 рік</b> (+/- 3 міс.);</li>
-                  <li><b>Вартість робіт по переведенню - 5 000 у.о.</b>
+                  <li><b>Вартість робіт по переведенню - 100 у.о. кв.м.</b>
                       (виготовлення всіх без виключення документів по переведенню з встановленням вхідної групи, включаючи авторський та технічний нагляд);</li>
                   <li><b>Вартість будівельних робіт - визначається додатково</b>
                       (залежить від складності та об'єму робіт, намірів та побажань Замовника, може включати внутрішні роботи під конкретні цілі використання, ексклюзивний підхід тощо);</li>
@@ -201,12 +227,17 @@ $user->countIt();
     <!-- Footer -->
     <footer class="bg-black small text-center text-white-50">
         <div class="container main-fnt">
-            Copyright &copy; Yukai, Lawer UA - 2018
+            <!-- FB share button code -->
+            <div class="fb-share-button" data-href="http://zminafondu.kiev.ua" data-layout="button"></div>
         </div>
+        <div class="container main-fnt">Copyright &copy; Yukai, Lawer UA - 2018</div>
     </footer>
 
-    <a id="back-to-top" href="#" class="btn btn-outline-secondary btn-sm back-to-top"
-       role="button" title="TOP" data-toggle="tooltip" data-placement="left">
+    <a id="back-to-top"
+       href="#"
+       class="btn btn-outline-secondary btn-sm back-to-top"
+       role="button" title="TOP"
+       data-toggle="tooltip" data-placement="left">
         <span class="fa fa-chevron-up"></span>
     </a>
 

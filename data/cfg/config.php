@@ -7,7 +7,7 @@ return array(
         'theme'   => 'default',
     ),
     'stat' => array(
-        'rowsPerPage' => 5,
+        'rowsPerPage' => 30,
         'urlPattern'  => '/bin/mr450.php?s56=(:num)'
     ),
     'form' => array(

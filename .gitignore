@@ -29,8 +29,10 @@ temp/
 
 .idea
 .idea/*
+.vscode
 
 data/cfg/rnd_string.php
+google38f5fe017b5fc218.html
 
 # OS generated files #
 ######################

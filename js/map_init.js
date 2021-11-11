@@ -1,7 +1,8 @@
 // Google Maps Scripts
 
 function initMap() {
-    var dluga = {lat:50.406957, lng:30.667034};
+    // var dluga = {lat:50.406957, lng:30.667034};
+    var dluga = {lat:50.46736421966671, lng:30.47084499892781};
     var mapOptions = {
         // How zoomed in you want the map to start at (always required)
         zoom: 15,
@@ -19,7 +20,7 @@ function initMap() {
     var marker = new google.maps.Marker({
         position: dluga,
         animation: google.maps.Animation.DROP,
-        title: "Київ, вул. Архітектора Вербицького, 32-А, оф. 316",
+        title: "вул. Деревлянська, 8, м. Київ, 04119",
         map: map
     });
 }

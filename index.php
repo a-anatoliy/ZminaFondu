@@ -255,7 +255,7 @@ $user->countIt();
   <script src="/js/bootstrap.min.js"></script>
 
   <script src="/js/map_init.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDQKdquc3DvxXQU51TLOxn-9hv5hKoa64&callback=initMap&clickableIcons=false" async defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=KEY&callback=initMap&clickableIcons=false" async defer></script>
 
   <script src="/js/some.js"></script>
 

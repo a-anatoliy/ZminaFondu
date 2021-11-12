@@ -160,8 +160,11 @@ $user->countIt();
       </div>
 
       <div class="row">
-          <div class="col-12">
-              <div id="map_container"><div id="map"></div></div>
+          <div class="col-12" style="padding: 0 !important">
+              <!-- <div id="map_container"><div id="map"></div></div> -->
+              <div id="map_container">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2539.5977936472627!2d30.46865631645171!3d50.467213979477606!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4cdd749dff09b%3A0x55910163abe54e8!2z0YPQuy4g0JTQtdGA0LXQstC70Y_QvdGB0LrQsNGPLCA4LCDQmtC40LXQsiwg0KPQutGA0LDQuNC90LAsIDAyMDAw!5e0!3m2!1sru!2spl!4v1636707663756!5m2!1sru!2spl" <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2539.5977936472627!2d30.46865631645171!3d50.467213979477606!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4cdd749dff09b%3A0x55910163abe54e8!2z0YPQuy4g0JTQtdGA0LXQstC70Y_QvdGB0LrQsNGPLCA4LCDQmtC40LXQsiwg0KPQutGA0LDQuNC90LAsIDAyMDAw!5e0!3m2!1sru!2spl!4v1636707663756!5m2!1sru!2spl" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+              </div>
           </div>
       </div>
 
@@ -253,10 +256,10 @@ $user->countIt();
   <script src="/js/jquery-3.3.1.min.js"></script>
   <script src="/js/jquery.easing.min.js"></script>
   <script src="/js/bootstrap.min.js"></script>
-
+  <!--
   <script src="/js/map_init.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=KEY&callback=initMap&clickableIcons=false" async defer></script>
-
+  -->
   <script src="/js/some.js"></script>
 
   </body>

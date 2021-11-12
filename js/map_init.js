@@ -1,4 +1,8 @@
 // Google Maps Scripts
+/*
+<script src="/js/map_init.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=API_KEY_GOES_HERE&callback=initMap&clickableIcons=false" async defer></script>
+*/
 
 function initMap() {
     // var dluga = {lat:50.406957, lng:30.667034};
